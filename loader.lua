@@ -1,20 +1,19 @@
 local USER = "Diontigon"
 local REPO = "neverwin"
-local FILE = "neverwin.lua"
+local FILE = "nw.lua"
 
 local URLS = {
-    "https://raw.githubusercontent.com/" .. USER .. "/" .. REPO .. "/main/" .. FILE,
     "https://cdn.jsdelivr.net/gh/" .. USER .. "/" .. REPO .. "@main/" .. FILE,
+    "https://raw.githubusercontent.com/" .. USER .. "/" .. REPO .. "/main/" .. FILE,
     "https://raw.githack.com/" .. USER .. "/" .. REPO .. "/main/" .. FILE,
 }
 
 local function isCode(s)
-    return type(s) == "string" and #s > 500 and not s:find("^404")
+    return type(s) == "string" and #s > 500 and not s:find("^404") and not s:find("Couldn't find")
 end
 
 local function tryFetch(url)
     print("[NW] Trying:", url)
-    -- HttpGet первым (у Madium работает)
     if game.HttpGet then
         local ok, res = pcall(game.HttpGet, game, url)
         if ok and isCode(res) then return res end
